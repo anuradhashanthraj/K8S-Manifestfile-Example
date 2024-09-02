@@ -1,0 +1,10 @@
+apiVersion: v1
+kind: Pod
+metadata:
+  name: robo-ecommerce-pod
+spec:
+  containers:
+    - images: anusocial123/ecommerce-web:latest
+      name: web-container
+      ports:
+        - containerPort: 80
