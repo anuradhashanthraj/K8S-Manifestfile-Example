@@ -22,16 +22,18 @@ spec:
               value: "NGINX"
 ---
 apiVersion: v1
-kind: Service
+kind: Service 
 metadata:
-  name: nginx-deployment
+  name: nginx-svc
 spec:
   selector:
-    app: nginx-web
+    app: nigix-web
   ports:
-    - protocal: TCP
-      port: 80
+    - port: 86
       targetPort: 80
-  type: ClusterIP
+      protocol: TCP
+  type: ClusterIP        
+
+
   
 
