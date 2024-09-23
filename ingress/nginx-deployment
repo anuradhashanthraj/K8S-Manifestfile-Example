@@ -1,39 +1,34 @@
-apiVersion: apps/v1
-kind: Deployment
+apiVersion: networking.k8s.io/v1
+kind: Ingress
 metadata:
-  name: nginx-deployment
+  name: k8s-ingress
+  annotations:
+    nginx.ingress.kubernetes.io/ssl-redirect: "false"
+    nginx.ingress.kubernetes.io/use-regex: "true"
+    nginx.ingress.kubernetes.io/rewrite-target: /$2
 spec:
-  replicas: 3
-  selector:
-    matchLabels:
-      app: nginx-web
-  template:
-    metadata:
-      labels:
-        app: nginx-web
-    spec:
-      containers:
-        - name: nginx-container
-          image: nginx
-          ports: 
-            - containerPort: 80
-          env:
-            - name: TITLE
-              value: "NGINX"
----
-apiVersion: v1
-kind: Service 
-metadata:
-  name: nginx-svc
-spec:
-  selector:
-    app: nigix-web
-  ports:
-    - port: 86
-      targetPort: 80
-      protocol: TCP
-  type: ClusterIP        
-
-
-  
-
+  ingressClassName: nginx
+  rules:
+  - http:
+      paths:
+      - path: /nginx(/|$)(.*)
+        pathType: Prefix
+        backend:
+          service:
+            name: nginx-svc
+            port:
+              number: 86
+      - path: /httpd(/|$)(.*)
+        pathType: Prefix
+        backend:
+          service:
+            name: httpd-deployment
+            port:
+              number: 80
+      - path: /(.*)
+        pathType: Prefix
+        backend:
+          service:
+            name: nginx-svc
+            port:
+              number: 86
