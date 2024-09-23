@@ -10,7 +10,7 @@ spec:
   template:
     metadata:
       labels:
-        app:
+        app: nginx-web
     spec:
       containers:
         - name: nginx-container
@@ -31,7 +31,7 @@ spec:
   ports:
     - port: 80
       protocal: TCP
-      tagetport: 80
+      tagetPort: 80
   type: ClusterIP
   
 
