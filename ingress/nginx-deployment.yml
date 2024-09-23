@@ -1,36 +1,33 @@
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: nginx-deployment
+  name: nginx  
 spec:
-  replicas: 2
+  replicas: 1
   selector:
     matchLabels:
-      app: ngnix-web
+      app: nginx
   template:
     metadata:
       labels:
-        app: nginx-web
+        app: nginx
     spec:
       containers:
-        - name: nginx-container
-          image: nginx
-          ports:
-            - containerPort: 80
-          env:
-            - name: TITLE
-              value: "APACHE,APP1"
+      - name: nginx
+        image: nginx
+        ports:
+        - containerPort: 80
+        env:
+        - name: TITLE
+          value: "NGINX APP1"
 ---
 apiVersion: v1
 kind: Service
 metadata:
-  name: nginx-deployment
+  name: nginx-svc
 spec:
-  selector:
-    app: nginx-web
-  ports:
-    - protocol: TCP
-      port: 80
-      targetPort: 80
   type: ClusterIP
-      
+  ports:
+  - port: 80
+  selector:
+    app: nginx
