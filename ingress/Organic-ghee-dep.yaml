@@ -1,0 +1,35 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: organic-ghee-service-deployment
+spec:
+  replicas: 2
+  selector:
+    matchLabels:
+      app: organic-ghee-web
+  template:
+    metadata:
+      labels:
+        app: organic-ghee-web
+    spec:
+      containers:
+        - name: ghee-container
+          image: anusocial123/organic-ghee-service:latest
+          ports:
+            - containerPort: 80
+          env:
+            - name: TITLE
+              value: "APACHE,APP2"
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: organic-ghee-service
+spec:
+  selector:
+    app: organic-ghee-web
+  ports:
+    - protocol: TCP
+      port: 80
+      targetPort: 80
+  type: ClusterIP
