@@ -11,14 +11,7 @@ spec:
   rules:
   - http:
       paths:
-      - path: /nginx(/|$)(.*)
-        pathType: Prefix
-        backend:
-          service:
-            name: nginx-svc
-            port:
-              number: 80
-      - path: /httpd(/|$)(.*)
+      - path: /organicghee(/|$)(.*)
         pathType: Prefix
         backend:
           service:
